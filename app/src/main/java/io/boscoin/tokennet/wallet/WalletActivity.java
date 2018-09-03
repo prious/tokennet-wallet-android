@@ -194,7 +194,8 @@ public class WalletActivity extends AppCompatActivity implements
 
         AsyncHttpClient client = new AsyncHttpClient(true, PORT_HTTP,PORT_HTTPS);
         RequestParams params = new RequestParams();
-        StringBuilder url = new StringBuilder(Constants.Domain.BOS_HORIZON_TEST);
+
+        StringBuilder url = new StringBuilder(BuildConfig.NETWORK_DOMAIN);
         url.append("/");
         url.append(Constants.Params.ACCOUNTS);
         url.append("/");
@@ -272,7 +273,8 @@ public class WalletActivity extends AppCompatActivity implements
         Bundle bundle = new Bundle();
         bundle.putLong(Constants.Invoke.WALLET, mAccountId);
         fragAll.setArguments(bundle);
-        getSupportFragmentManager().beginTransaction().replace(R.id.frag_container,fragAll).commit();
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.frag_container,fragAll).commitAllowingStateLoss();
 
     }
 
@@ -426,7 +428,6 @@ public class WalletActivity extends AppCompatActivity implements
 
         }catch (Exception e){
 
-            e.printStackTrace();
         }finally {
             mDbOpenHelper.close();
             mCursor.close();

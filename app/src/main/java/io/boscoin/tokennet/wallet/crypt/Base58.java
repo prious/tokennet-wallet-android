@@ -1,4 +1,14 @@
+<<<<<<< HEAD:app/src/main/java/io/boscoin/tokennet/wallet/crypt/Base58.java
 package io.boscoin.tokennet.wallet.crypt;
+=======
+/**
+ *  This Source refer https://www.programcreek.com/java-api-examples/index.php?source_dir=bitseal-master/src/org/bitseal/util/Base58.java
+ *  Licensed under the Apache License.
+ *
+ */
+
+package io.boscoin.toknenet.wallet.crypt;
+>>>>>>> upstream/master:app/src/main/java/io/boscoin/toknenet/wallet/crypt/Base58.java
 
 import java.math.BigInteger;
 
@@ -10,7 +20,7 @@ public class Base58 {
 
     private Base58()
     {
-        // The constructor of this class is private in order to prevent the class being instantiated
+       
     }
 
     public static String encode(byte[] input)

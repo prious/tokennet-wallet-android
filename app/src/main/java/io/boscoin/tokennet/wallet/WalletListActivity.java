@@ -230,7 +230,8 @@ public class WalletListActivity extends AppCompatActivity {
 
         AsyncHttpClient client = new AsyncHttpClient(true, PORT_HTTP,PORT_HTTPS);
         RequestParams params = new RequestParams();
-        StringBuilder url = new StringBuilder(Constants.Domain.BOS_HORIZON_TEST);
+
+        StringBuilder url = new StringBuilder(BuildConfig.NETWORK_DOMAIN);
         url.append("/");
         url.append(Constants.Params.ACCOUNTS);
         url.append("/");
@@ -250,7 +251,7 @@ public class WalletListActivity extends AppCompatActivity {
                     DbOpenHelper.updateColumnWalletBalance(mContext,wallet.getWalletId(), curBal);
                 }catch (Exception e){
 
-                    e.printStackTrace();
+
 
                     dismissDialog();
                 }finally {
@@ -386,7 +387,8 @@ public class WalletListActivity extends AppCompatActivity {
 
         if(isUp){
 
-            if(firstVisibleItemPosition < mLastCount){
+            if(firstVisibleItemPosition <= (mLastCount -ADD_COUNT) ){
+
 
                 mCount = firstVisibleItemPosition -ADD_COUNT;
 

@@ -1,4 +1,14 @@
+<<<<<<< HEAD:app/src/main/java/io/boscoin/tokennet/wallet/crypt/AESCrypt.java
 package io.boscoin.tokennet.wallet.crypt;
+=======
+/**
+ *  This Source refer https://github.com/scottyab/AESCrypt-Android/blob/master/aescrypt/src/main/java/com/scottyab/aescrypt/AESCrypt.java
+ *  Licensed under the Apache License.
+ *  we add prefix, os, version and change base68 to base58 for using our wallet
+ **/
+
+package io.boscoin.toknenet.wallet.crypt;
+>>>>>>> upstream/master:app/src/main/java/io/boscoin/toknenet/wallet/crypt/AESCrypt.java
 
 import android.util.Log;
 

@@ -262,11 +262,40 @@ public class SendActivity extends AppCompatActivity implements View.OnClickListe
 
                 mAmount = s.toString();
 
-                if(mAmount.startsWith("0") || mAmount.startsWith(".")){
+
+                if( mAmount.startsWith(".")){
                     mValidAmmount = false;
-                }else if(!TextUtils.isEmpty(mAmount)){
-                    mValidAmmount = true;
-                }else{
+                }
+
+
+                else if(!TextUtils.isEmpty(mAmount)){
+                    BigDecimal zeroNum = new BigDecimal("0");
+                    String formatted = mAmount;
+                    if(mAmount.contains(".")) {
+
+                        if (mAmount.indexOf(".") + 8 <= mAmount.length() - 1) {
+                            formatted = mAmount.substring(0, mAmount.indexOf(".") + 8);
+                        }
+
+                    }
+
+                    String s1 = Utils.fitDigit(formatted);
+
+                    try {
+                        if(Utils.MoneyCalcualtion(s1, "0", ADD).equals(zeroNum)){
+                            mValidAmmount = false;
+
+                        }else{
+                            mValidAmmount = true;
+
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        mValidAmmount = false;
+                    }
+                }
+
+                else{
                     mValidAmmount = false;
                 }
                 changeButton();
@@ -356,7 +385,8 @@ public class SendActivity extends AppCompatActivity implements View.OnClickListe
 
         AsyncHttpClient client = new AsyncHttpClient(true, PORT_HTTP,PORT_HTTPS);
         RequestParams params = new RequestParams();
-        StringBuilder url = new StringBuilder(Constants.Domain.BOS_HORIZON_TEST);
+
+        StringBuilder url = new StringBuilder(BuildConfig.NETWORK_DOMAIN);
         url.append("/");
         url.append(Constants.Params.ACCOUNTS);
         url.append("/");
@@ -549,7 +579,8 @@ public class SendActivity extends AppCompatActivity implements View.OnClickListe
 
         AsyncHttpClient client = new AsyncHttpClient(true, PORT_HTTP,PORT_HTTPS);
         RequestParams params = new RequestParams();
-        StringBuilder url = new StringBuilder(Constants.Domain.BOS_HORIZON_TEST);
+
+        StringBuilder url = new StringBuilder(BuildConfig.NETWORK_DOMAIN);
         url.append("/");
         url.append(Constants.Params.ACCOUNTS);
         url.append("/");
@@ -579,7 +610,7 @@ public class SendActivity extends AppCompatActivity implements View.OnClickListe
 
 
                 Network.use(new Network(BuildConfig.NETWORK_PH));
-                Server server = new Server(Constants.Domain.BOS_HORIZON_TEST);
+                Server server = new Server( BuildConfig.NETWORK_DOMAIN);
 
                 KeyPair source = KeyPair.fromSecretSeed(mSeed);
                 KeyPair destination = KeyPair.fromAccountId(mDestion);
@@ -608,8 +639,9 @@ public class SendActivity extends AppCompatActivity implements View.OnClickListe
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    mProgDialog.dismiss();
-                                    sendCompleteDialog();
+
+                                    updateTransTime();
+
                                 }
                             });
                         }else{
@@ -657,7 +689,7 @@ public class SendActivity extends AppCompatActivity implements View.OnClickListe
 
 
                 Network.use(new Network(BuildConfig.NETWORK_PH));
-                Server server = new Server(Constants.Domain.BOS_HORIZON_TEST);
+                Server server = new Server(BuildConfig.NETWORK_DOMAIN);
 
                 KeyPair source = KeyPair.fromSecretSeed(mSeed);
                 KeyPair destination = KeyPair.fromAccountId(mDestion);
@@ -711,9 +743,7 @@ public class SendActivity extends AppCompatActivity implements View.OnClickListe
                                 sendFailDialog();
                             }
                         });
-                        // If the result is unknown (no response body, timeout etc.) we simply resubmit
-                        // already built transaction:
-                        // SubmitTransactionResponse response = server.submitTransaction(transaction);
+
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -739,7 +769,8 @@ public class SendActivity extends AppCompatActivity implements View.OnClickListe
         params.put(Constants.Params.LIMIT, "1");
         params.put(Constants.Params.ORDER, Constants.Params.DESC);
 
-        StringBuilder url = new StringBuilder(Constants.Domain.BOS_HORIZON_TEST);
+
+        StringBuilder url = new StringBuilder(BuildConfig.NETWORK_DOMAIN);
         url.append("/");
         url.append(Constants.Params.ACCOUNTS);
         url.append("/");

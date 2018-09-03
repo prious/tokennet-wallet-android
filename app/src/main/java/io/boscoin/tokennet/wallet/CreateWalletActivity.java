@@ -274,7 +274,7 @@ public class CreateWalletActivity extends AppCompatActivity {
     private void setErrNameNone() {
         mTvNameNone.setVisibility(View.VISIBLE);
         mTvNameAlready.setVisibility(View.GONE);
-        mTvLengthErr.setVisibility(View.GONE);
+        mTvLengthErr.setVisibility(View.INVISIBLE);
 
         mTvPwMatch.setVisibility(View.INVISIBLE);
     }
@@ -427,17 +427,17 @@ public class CreateWalletActivity extends AppCompatActivity {
             @Override
             public void run() {
                 String friendbotUrl = String.format(
-                        Constants.Domain.BOS_HORIZON_TEST+"/friendbot?addr=%s",
+                        BuildConfig.NETWORK_DOMAIN+"/friendbot?addr=%s",
                         pair.getAccountId());
 
                 try {
                     InputStream response = new URL(friendbotUrl).openStream();
                     String body = new Scanner(response, "UTF-8").useDelimiter("\\A").next();
-                    System.out.println("SUCCESS! You have a new account :)\n" + body);
+
                     handler.sendEmptyMessage(MSG_REQUEST_COMPLETE);
                 } catch (IOException e) {
                     handler.sendEmptyMessage(MSG_REQUEST_ERROR);
-                    e.printStackTrace();
+
                 }
             }
         }.start();
